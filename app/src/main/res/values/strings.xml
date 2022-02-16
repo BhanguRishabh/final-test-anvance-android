@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FA_rishabhSingh_c078019_android</string>
+    <string name="title_activity_select_place">SELECT_PLACE</string>
+    <string name="title_activity_see_place">SEE_PLACE</string>
+</resources>
