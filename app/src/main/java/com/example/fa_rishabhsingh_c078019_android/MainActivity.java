@@ -1,6 +1,10 @@
 package com.example.fa_rishabhsingh_c078019_android;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    ListView list;
+    //ListView list;
+    RecyclerView list;
     ImageButton addBtn;
     databaseHelperClass dbHelper = new databaseHelperClass(MainActivity.this);
     static Boolean firstLauch = true;
@@ -24,38 +29,43 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-         list = findViewById(R.id.lvplaces);
-         addBtn = findViewById(R.id.imbtnAdd);
+        //dbHelper.deleteAll();;
+       // sampleData();
+        //list = findViewById(R.id.lvplaces);
+        addBtn = findViewById(R.id.imbtnAdd);
+        list = findViewById(R.id.rvList);
+
+        list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this,"click detected", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
+        
 
 
 
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent detailSCreen = new Intent(MainActivity.this,SELECT_PLACE.class);
 
 
-         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-             @Override
-             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent detailSCreen = new Intent(MainActivity.this,SEE_PLACE.class);
-                 detailSCreen.putExtra("scr",position);
-
-                 startActivity(detailSCreen);
-
-             }
-         });
-         addBtn.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View v) {
-                 Intent detailSCreen = new Intent(MainActivity.this,SELECT_PLACE.class);
+                startActivity(detailSCreen);
 
 
-                 startActivity(detailSCreen);
+            }
+        });
 
 
-             }
-         });
-
-
-       list.setAdapter( new tableViewAdapter(MainActivity.this,dbHelper.allDataReturn()));
-
+        //  list.setAdapter( new tableViewAdapter(MainActivity.this,dbHelper.allDataReturn()));
+        RecycleAdapter adapter = new RecycleAdapter(dbHelper.allDataReturn(),MainActivity.this);
+        list.setAdapter(adapter);
+        list.setLayoutManager(new LinearLayoutManager(this));
+        // Attach the adapter to the recyclerview to populate ite
     }
 
 
@@ -68,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         dbHelper.addData(new placesModelClass(1,"neyydh",false,25.5,45.8,"73299i"));
         dbHelper.addData(new placesModelClass(1,"neyydh",true,25.5,45.8,"73299i"));
     }
+
 
 
 }

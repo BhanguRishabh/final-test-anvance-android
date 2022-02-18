@@ -86,6 +86,23 @@ public class databaseHelperClass  extends SQLiteOpenHelper {
 
     }
 
+    public int updateRow(placesModelClass prod){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(PLACE_NAME,prod.getPlace());
+        cv.put(PLACE_VISIT,prod.getVisit());
+        cv.put(PLACE_ID,prod.getId());
+        cv.put(PLACE_LATITUDE,prod.getLatitude());
+        cv.put(PLACE_LONGITUDE,prod.getLongitude());
+        cv.put(PLACE_DATE,prod.getDate());
+        int update = db.update(PLACES_TABLE, cv, PLACE_ID + "=" + prod.getId(), null);
+
+     return update;
+    }
+
+
+
+
 
 
     @Override

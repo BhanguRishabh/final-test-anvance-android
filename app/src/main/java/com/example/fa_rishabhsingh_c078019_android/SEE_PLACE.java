@@ -29,7 +29,8 @@ public class SEE_PLACE extends FragmentActivity implements OnMapReadyCallback {
 
         binding = ActivitySeePlaceBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-         recivedIndex = getIntent().getIntExtra("scr",0);
+         recivedIndex = getIntent().getIntExtra("pos",0);
+
 
         recivedList = dbHelper.allDataReturn();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
