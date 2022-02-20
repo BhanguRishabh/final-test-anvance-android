@@ -54,7 +54,7 @@ public class SEE_PLACE extends FragmentActivity implements OnMapReadyCallback {
 
         // Add a marker in Sydney and move the camera
         LatLng sydney = new LatLng(recivedList.get(recivedIndex).getLatitude(), recivedList.get(recivedIndex).getLongitude());
-        mMap.addMarker(new MarkerOptions().position(sydney).title(recivedList.get(recivedIndex).getPlace().toString()));
+        mMap.addMarker(new MarkerOptions().position(sydney).title(recivedList.get(recivedIndex).getDate().toString()+ "||"+recivedList.get(recivedIndex).getPlace().toString()  ));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 }
