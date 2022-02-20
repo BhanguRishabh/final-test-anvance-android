@@ -100,6 +100,20 @@ public class databaseHelperClass  extends SQLiteOpenHelper {
      return update;
     }
 
+    public void deleteRow(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(PLACES_TABLE,PLACE_ID + "="+id,null);
+    }
+
+    public  boolean delete(placesModelClass place){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + PLACES_TABLE + " WHERE " + PLACE_ID + " = " + place.getId();
+        Cursor cursor = db.rawQuery(query, null);
+        if(cursor.moveToFirst()) { return  true;}
+        else{  return false;}
+    }
+
+
 
 
 

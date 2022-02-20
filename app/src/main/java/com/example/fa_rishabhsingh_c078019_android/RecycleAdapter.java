@@ -7,11 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -23,21 +25,30 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
     Context context;
     databaseHelperClass dbHelper;
 
+
+
     public RecycleAdapter(List<placesModelClass>data , Context context  ){
         this.data = data;
         this.context = context;
         dbHelper = new databaseHelperClass(context);
 
+
+
+
+
     }
     public class ViewHolder extends  RecyclerView.ViewHolder{
         private TextView textView;
         private CheckBox  checkBox;
+        private ImageButton deletebtn,editbtn;
 
         public ViewHolder(final View view) {
 
             super(view);
             textView = view.findViewById(R.id.cardText);
             checkBox = view.findViewById(R.id.cardCheck);
+            deletebtn = view.findViewById(R.id.cardDeletebt);
+            editbtn = view.findViewById(R.id.cardEditbt);
 
         }
     }
@@ -107,30 +118,38 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.ViewHold
 
                 Intent indent = new Intent(context,SEE_PLACE.class);
                  indent.putExtra("pos",holder.getAdapterPosition());
+                  context.startActivity(indent);
+            }
+        });
+        holder.editbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent indent = new Intent(context,SELECT_PLACE.class);
+                indent.putExtra("sendingId",holder.getAdapterPosition());
+
+                 context.startActivity(indent);
+            }
+        });
+        holder.deletebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                List<placesModelClass> recievedAll = new ArrayList<>();
+                recievedAll = dbHelper.allDataReturn();
 
 
-                context.startActivity(indent);
+                dbHelper.deleteRow(recievedAll.get(holder.getAdapterPosition()).getId());
+                data.remove(holder.getAdapterPosition());
+                 notifyDataSetChanged();
+
+
+
+
+
+
             }
         });
 
-        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT | ItemTouchHelper.DOWN | ItemTouchHelper.UP) {
-
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                Toast.makeText(context, "on Move", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                Toast.makeText(context, "on Swiped ", Toast.LENGTH_SHORT).show();
-                //Remove swiped item from list and notify the RecyclerView
-                int position = viewHolder.getAdapterPosition();
-                //arrayList.remove(position);
-                //adapter.notifyDataSetChanged();
-
-            }
-        };
 
 
 

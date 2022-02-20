@@ -1,9 +1,5 @@
 package com.example.fa_rishabhsingh_c078019_android;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -13,21 +9,25 @@ import android.location.Geocoder;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
+
+import com.example.fa_rishabhsingh_c078019_android.databinding.ActivitySelectPlaceBinding;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.example.fa_rishabhsingh_c078019_android.databinding.ActivitySelectPlaceBinding;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SELECT_PLACE extends FragmentActivity implements OnMapReadyCallback {
@@ -44,7 +44,11 @@ public class SELECT_PLACE extends FragmentActivity implements OnMapReadyCallback
     ImageButton searchButton;
     Button slctLocButton;
     databaseHelperClass dbHelper = new databaseHelperClass(SELECT_PLACE.this);
+    List<placesModelClass> recievedAll = new ArrayList<>();
+
     String Address1;
+    int editId = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +61,9 @@ public class SELECT_PLACE extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        editId = getIntent().getIntExtra("sendingId",0);
+
         searchText = findViewById(R.id.etxtSearch);
         searchButton = findViewById(R.id.ibtnSearch);
         slctLocButton = findViewById(R.id.btSelectLoc);
@@ -88,9 +95,23 @@ public class SELECT_PLACE extends FragmentActivity implements OnMapReadyCallback
         slctLocButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 Toast.makeText(SELECT_PLACE.this,"location "+longitude.toString(), Toast.LENGTH_SHORT).show();
 
-                dbHelper.addData(new placesModelClass(1,reverseGeocoding(latitude,longitude),false,latitude,longitude,"jkskd"));
+                if(editId != 0){
+
+                    recievedAll = dbHelper.allDataReturn();
+
+                    placesModelClass updateClassInput = new placesModelClass(recievedAll.get(editId).getId(),reverseGeocoding(latitude,longitude),false,latitude,longitude,recievedAll.get(editId).getDate());
+                    dbHelper.updateRow(updateClassInput);
+
+                }
+                else{
+                    dbHelper.addData(new placesModelClass(1,reverseGeocoding(latitude,longitude),false,latitude,longitude,"jkskd"));
+                }
+
+
 
                 Intent detailSCreen = new Intent(SELECT_PLACE.this,MainActivity.class);
 

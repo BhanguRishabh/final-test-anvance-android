@@ -4,6 +4,8 @@
     package="com.example.fa_rishabhsingh_c078019_android"
     tools:ignore="CoarseFineLocation">
 
+
+
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
