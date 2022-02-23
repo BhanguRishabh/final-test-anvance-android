@@ -7,18 +7,17 @@
     android:backgroundTint="#FFFFFF"
     tools:context=".MainActivity">
 
-    <ImageButton
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/imbtnAdd"
-        android:layout_width="78dp"
-        android:layout_height="79dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="7dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="28dp"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/addicon"
-        app:background="@drawable/roundcorner"
-
-        />
+        app:srcCompat="@android:drawable/ic_input_add" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvList"
