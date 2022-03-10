@@ -17,13 +17,15 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     //ListView list;
     RecyclerView list;
-    ImageButton addBtn;
+    FloatingActionButton addBtn;
     Context context;
     databaseHelperClass dbHelper = new databaseHelperClass(MainActivity.this);
     placesModelClass objPlace;
