@@ -35,7 +35,7 @@
         android:layout_height="29dp"
         android:layout_marginStart="71dp"
         android:layout_marginTop="30dp"
-        android:text="Favorite Places"
+        android:text="favorite Places"
         android:textAlignment="center"
         android:textColor="#BF1F1F"
         android:textSize="20sp"
